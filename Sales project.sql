@@ -5,38 +5,13 @@ SELECT * FROM sales.date;
 SELECT * FROM sales.markets;
 SELECT * FROM sales.products;
 
--- Checking unique values
-Select distinct product_type from products;  -- plot
-Select distinct sum(sales_qty) as Order_count from transactions;   -- plot (card)
-Select distinct zone from markets;
-Select distinct markets_name from markets;
 
 -- Create a total sales column in the transaction table
 ALTER TABLE transactions ADD COLUMN Total_sales DECIMAL(24,2);
 
 UPDATE transactions SET Total_sales = sales_qty * sales_amount; 
 
-Select distinct Sum(Total_sales) As Total_sales from transactions;  -- plot (card)
-
--- still Checking unique values
-Select distinct year from date;
-
-Select distinct month_name from date
-Where year = 2017;  -- There was operation from June to December 2017, there was operation through out 2018 - 2019.
-Select distinct month_name from date
-Where year = 2020;  -- there was operation from January to June.
-
-Select distinct currency from transactions;  -- There are two currencies (USD & INR)
-
-Select count(currency) from transactions
--- Where currency like '%USD%'  -- There are 2 USD currency in the transaction currency
-Where currency like '%INR%';  -- There are 150,279 INR currency in the transaction currency
--- I will convert the USD currency to INR currency --
-
--- converting USD to INR based on the exchange rate as at the year of transaction
-UPDATE transactions
-SET sales_amount = sales_amount * 64.05
-WHERE currency = 'USD';
+Select distinct Sum(Total_sales) As Total_sales from transactions; 
 
 
 -- Revenue by Product type
